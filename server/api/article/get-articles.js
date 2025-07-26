@@ -3,7 +3,7 @@ import { getQuery } from "h3";
 // Tambahkan base URL dari server backend Anda
 // Untuk development, ini biasanya http://localhost:3000
 // Untuk produksi, ganti dengan URL domain Anda
-const baseUrl = "http://localhost:3000/api";
+const baseUrl = "https://mptibe-production.up.railway.app/api";
 
 export default defineEventHandler(async (event) => {
   setResponseHeaders(event, {
