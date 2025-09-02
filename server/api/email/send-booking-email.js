@@ -1,16 +1,26 @@
 // server/api/email/send-booking-email.js
 import { sendEmail } from '../../utils/emailService';
 import { bookingApprovalTemplate, bookingRejectionTemplate } from '../../utils/emailTemplates';
- import { validateAuth } from '../../utils/auth';
+import { validateAuth } from '../../utils/auth';
 
 export default defineEventHandler(async (event) => {
+  // CORS headers
+  setResponseHeaders(event, {
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Methods": "GET,POST,PUT,DELETE,OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type, Authorization",
+  });
+
+  // Handle preflight OPTIONS request
+  if (event.node.req.method === "OPTIONS") {
+    return "";
+  }
+
   // Auth check
   validateAuth(event);
   
   const body = await readBody(event);
-  const { to, subject, type, data } = body;
-  
-  // Validation
+  const { to, subject, type, data } = body;  // Validation
   if (!to || !subject) {
     throw createError({
       statusCode: 400,
