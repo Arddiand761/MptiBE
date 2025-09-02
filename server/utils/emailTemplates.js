@@ -1,9 +1,13 @@
 // server/utils/emailTemplates.js
 export function bookingApprovalTemplate(data) {
+  const baseUrl = process.env.NODE_ENV === 'production' 
+    ? 'https://mptibe-production.up.railway.app' 
+    : 'http://localhost:3001';
+  
   return `
     <div style="font-family:sans-serif;max-width:600px;margin:auto;border:1px solid #eee;padding:24px;">
       <div style="text-align:center;margin-bottom:20px;">
-        <img src="http://localhost:3001/logo.png" alt="Anas Law" style="height:60px;width:auto;">
+        <img src="${baseUrl}/logo.png" alt="Anas Law" style="height:60px;width:auto;">
       </div>
       <h2 style="color:#2d5016;">Booking Disetujui</h2>
       <p>Halo <b>${data.nama_pembooking}</b>,</p>
@@ -28,10 +32,14 @@ export function bookingApprovalTemplate(data) {
 }
 
 export function bookingRejectionTemplate(data) {
+  const baseUrl = process.env.NODE_ENV === 'production' 
+    ? 'https://mptibe-production.up.railway.app' 
+    : 'http://localhost:3001';
+    
   return `
     <div style="font-family:sans-serif;max-width:600px;margin:auto;border:1px solid #eee;padding:24px;">
       <div style="text-align:center;margin-bottom:20px;">
-        <img src="http://localhost:3001/logo.png" alt="Anas Law" style="height:60px;width:auto;">
+        <img src="${baseUrl}/logo.png" alt="Anas Law" style="height:60px;width:auto;">
       </div>
       <h2 style="color:#d32f2f;">Booking Ditolak</h2>
       <p>Halo <b>${data.nama_pembooking}</b>,</p>
