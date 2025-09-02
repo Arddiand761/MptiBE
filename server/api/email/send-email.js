@@ -3,6 +3,18 @@ import { sendEmail } from '../../utils/emailService';
 import { validateAuth } from '../../utils/auth';
 
 export default defineEventHandler(async (event) => {
+  // CORS headers
+  setResponseHeaders(event, {
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Methods": "GET,POST,PUT,DELETE,OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type, Authorization",
+  });
+
+  // Handle preflight OPTIONS request
+  if (event.node.req.method === "OPTIONS") {
+    return "";
+  }
+
   // Auth check
   validateAuth(event);
   
