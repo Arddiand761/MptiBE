@@ -19,8 +19,9 @@ export default defineEventHandler(async (event) => {
   // Auth check
   validateAuth(event);
   
-  const body = await readBody(event);
-  const { to, subject, type, data } = body;  // Validation
+  try {
+    const body = await readBody(event);
+    const { to, subject, type, data } = body;  // Validation
   if (!to || !subject) {
     throw createError({
       statusCode: 400,
@@ -52,20 +53,41 @@ export default defineEventHandler(async (event) => {
     });
   }
   
-  const result = await sendEmail({ to, subject, html });
-  if (result.success) {
-    return {
-      success: true,
-      message: 'Email sent successfully',
-      data: {
-        messageId: result.messageId,
-        timestamp: new Date().toISOString(),
-      },
-    };
-  } else {
+    console.log('Sending email to:', to);
+    
+    // Add timeout wrapper  
+    const emailPromise = sendEmail({ to, subject, html });
+    const timeoutPromise = new Promise((_, reject) => 
+      setTimeout(() => reject(new Error('Email timeout after 30s')), 30000)
+    );
+    
+    const result = await Promise.race([emailPromise, timeoutPromise]);
+    
+    if (result.success) {
+      return {
+        success: true,
+        message: 'Email sent successfully',
+        data: {
+          messageId: result.messageId,
+          timestamp: new Date().toISOString(),
+        },
+      };
+    } else {
+      throw createError({
+        statusCode: 500,
+        statusMessage: 'Failed to send email: ' + result.error
+      });
+    }
+  } catch (error) {
+    console.error('Email endpoint error:', error.message);
+    
+    if (error.statusCode) {
+      throw error;
+    }
+    
     throw createError({
       statusCode: 500,
-      statusMessage: 'Failed to send email: ' + result.error
+      statusMessage: 'Internal server error: ' + error.message
     });
   }
 });
