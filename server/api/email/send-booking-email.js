@@ -53,12 +53,14 @@ export default defineEventHandler(async (event) => {
     });
   }
   
+    console.log('=== EMAIL ENDPOINT DEBUG ===');
     console.log('Sending email to:', to);
+    console.log('Email type:', type);
     
-    // Add timeout wrapper  
+    // Reduce timeout to 15 seconds
     const emailPromise = sendEmail({ to, subject, html });
     const timeoutPromise = new Promise((_, reject) => 
-      setTimeout(() => reject(new Error('Email timeout after 30s')), 30000)
+      setTimeout(() => reject(new Error('Email timeout after 15s')), 15000)
     );
     
     const result = await Promise.race([emailPromise, timeoutPromise]);
