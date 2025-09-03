@@ -25,9 +25,15 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    // Build file path
-    const uploadsDir = path.resolve("./public/uploads");
+    // Build file path - different for production vs development
+    const uploadsDir = process.env.NODE_ENV === 'production' 
+      ? path.resolve("/app/.output/public/uploads")
+      : path.resolve("./public/uploads");
     const filePath = path.join(uploadsDir, filename);
+
+    console.log('Looking for file at:', filePath);
+    console.log('Uploads directory:', uploadsDir);
+    console.log('File exists:', fs.existsSync(filePath));
 
     // Security check - ensure file is within uploads directory
     if (!filePath.startsWith(uploadsDir)) {

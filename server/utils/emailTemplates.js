@@ -5,9 +5,10 @@ export function bookingApprovalTemplate(data) {
     : 'http://localhost:3001';
   
   return `
-    <div style="font-family:sans-serif;max-width:600px;margin:auto;border:1px solid #eee;padding:24px;">
-      <div style="text-align:center;margin-bottom:20px;">
-        <img src="${baseUrl}/logo.png" alt="Anas Law" style="height:60px;width:auto;">
+    <div style="font-family:Arial, sans-serif;max-width:600px;margin:auto;border:1px solid #eee;padding:24px;">
+      <div style="text-align:center;margin-bottom:20px;background:#f8f9fa;padding:20px;">
+        <h1 style="color:#2d5016;margin:0;font-size:28px;">⚖️ Anas Law</h1>
+        <p style="color:#666;margin:5px 0 0 0;">Solusi Hukum Terpercaya</p>
       </div>
       <h2 style="color:#2d5016;">Booking Disetujui</h2>
       <p>Halo <b>${data.nama_pembooking}</b>,</p>
@@ -37,9 +38,10 @@ export function bookingRejectionTemplate(data) {
     : 'http://localhost:3001';
     
   return `
-    <div style="font-family:sans-serif;max-width:600px;margin:auto;border:1px solid #eee;padding:24px;">
-      <div style="text-align:center;margin-bottom:20px;">
-        <img src="${baseUrl}/logo.png" alt="Anas Law" style="height:60px;width:auto;">
+    <div style="font-family:Arial, sans-serif;max-width:600px;margin:auto;border:1px solid #eee;padding:24px;">
+      <div style="text-align:center;margin-bottom:20px;background:#f8f9fa;padding:20px;">
+        <h1 style="color:#d32f2f;margin:0;font-size:28px;">⚖️ Anas Law</h1>
+        <p style="color:#666;margin:5px 0 0 0;">Solusi Hukum Terpercaya</p>
       </div>
       <h2 style="color:#d32f2f;">Booking Ditolak</h2>
       <p>Halo <b>${data.nama_pembooking}</b>,</p>
